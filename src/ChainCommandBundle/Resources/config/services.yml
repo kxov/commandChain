@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: false      # Automatically injects dependencies in your services.
+        autoconfigure: false
+
+    chain.command.service:
+        class: App\ChainCommandBundle\Service\ChainCommandService
+
+    chain.command:
+        class: App\ChainCommandBundle\Command\ChainCommand
+        tags:
+            - { name: 'console.command' }
+
+    chain.console.subscriber:
+        class: App\ChainCommandBundle\EventSubscriber\ConsoleCommandSubscriber
+        arguments: [ '@chain.command.service', '@logger' ]
+        tags: [ kernel.event_subscriber ]

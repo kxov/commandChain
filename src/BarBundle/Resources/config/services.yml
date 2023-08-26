@@ -1,0 +1,11 @@
+services:
+    # Console commands
+    bar.command:
+        class: App\BarBundle\Command\BarCommand
+        tags:
+            - { name: 'chain_command', head: 'chain:command', priority: 1 }
+            - { name: 'console.command' }
+
+    bar.not_in_chain.command:
+        class: App\BarBundle\Command\BarNotInChainCommand
+        tags: [ console.command ]

@@ -1,0 +1,6 @@
+services:
+    foo.command:
+        class: App\FooBundle\Command\FooCommand
+        tags:
+            - { name: 'chain_command', head: 'chain:command', priority: 2 }
+            - { name: 'console.command' }
