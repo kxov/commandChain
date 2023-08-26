@@ -1,4 +1,4 @@
-# commandChain project demonstrate work with ChainCommandBundle and BarBundle, FooBundle
+# This project demonstrate work with ChainCommandBundle and BarBundle, FooBundle
 
 ChainCommandBundle help you run your commands as chain of commands. You have opportunity to register console
 
