@@ -31,7 +31,9 @@ class ChainCommandPass implements CompilerPassInterface
         foreach ($chainCommands as $id => $tags) {
             foreach ($tags as $attributes) {
                 // add the chain command to the ChainCommand service
-                $chainCommandService->addMethodCall('addCommand', [new Reference($id), $attributes['head']]);
+                $chainCommandService->addMethodCall('addCommand',
+                    [new Reference($id), $attributes['head'], $attributes['priority'] ?? 0]
+                );
             }
         }
     }

@@ -35,7 +35,7 @@ class ChainCommandTest extends KernelTestCase
         $container = static::getContainer();
         $service = $container->get('chain.command.service');
 
-        $service->addCommand($childCommand, $headCommand->getName());
+        $service->addCommand($childCommand, $headCommand->getName(), 1);
         $this->app->run(new ArrayInput([$headCommand->getName()]), $this->output);
 
         self::assertEquals("Hello from Test Head Command!\nHello from Test Command!\n", $this->output->fetch());
@@ -52,7 +52,7 @@ class ChainCommandTest extends KernelTestCase
         $container = static::getContainer();
         $service = $container->get('chain.command.service');
 
-        $service->addCommand($childCommand, $headCommand->getName());
+        $service->addCommand($childCommand, $headCommand->getName(), 1);
         $this->app->run(new ArrayInput([$childCommand->getName()]), $this->output);
 
         self::assertEquals(

@@ -41,3 +41,10 @@ as service with tag "chain_command", and head:"command_head_name" after that com
     tags:
         - { name: 'chain_command', head: 'head:command' }
 ```
+
+You can also specify a priority tag, by default it is 0
+
+```yml
+    tags:
+        - { name: 'chain_command', head: 'head:command', priority: 5 }
+```

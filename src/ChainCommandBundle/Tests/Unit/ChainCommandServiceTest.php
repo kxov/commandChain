@@ -35,8 +35,8 @@ class ChainCommandServiceTest extends TestCase
      */
     public function testAddGetIsChainCommandService(): void
     {
-        $this->chainCommandService->addCommand(new BarCommand(), 'chain_bar:command');
-        $this->chainCommandService->addCommand(new FooCommand(), 'chain_foo:command');
+        $this->chainCommandService->addCommand(new BarCommand(), 'chain_bar:command', 1);
+        $this->chainCommandService->addCommand(new FooCommand(), 'chain_foo:command', 2);
 
         self::assertCount(2, $this->chainCommandService->getCommands());
 
@@ -57,12 +57,28 @@ class ChainCommandServiceTest extends TestCase
      */
     public function testIsHeadGetHeadNameChainCommandService(): void
     {
-        $this->chainCommandService->addCommand(new BarCommand(), 'chain:command');
-        $this->chainCommandService->addCommand(new FooCommand(), 'chain:command');
+        $this->chainCommandService->addCommand(new BarCommand(), 'chain:command', 1);
+        $this->chainCommandService->addCommand(new FooCommand(), 'chain:command', 2);
 
         self::assertCount(1, $this->chainCommandService->getCommands());
 
         self::assertTrue($this->chainCommandService->isHead('chain:command'));
         self::assertEquals('chain:command', $this->chainCommandService->getHeadName('bar:command'));
+    }
+
+    /**
+     *
+     * @covers ChainCommandService::getCommands
+     *
+     * @return void
+     */
+    public function testPriorityChainCommandService(): void
+    {
+        $this->chainCommandService->addCommand(new BarCommand(), 'chain:command', 40);
+        $this->chainCommandService->addCommand(new FooCommand(), 'chain:command', 11);
+
+        self::assertCount(1, $this->chainCommandService->getCommands());
+
+        self::assertEquals($this->chainCommandService->getChildren('chain:command')[0]['name'], 'foo:command');
     }
 }

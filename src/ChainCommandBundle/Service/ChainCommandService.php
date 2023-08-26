@@ -10,10 +10,11 @@ class ChainCommandService
 {
     private array $commands = [];
 
-    public function addCommand(Command $command, string $head): void
+    public function addCommand(Command $command, string $head, int $priority): void
     {
         $this->commands[$head][] = [
             'name' => $command->getName(),
+            'priority' => $priority
         ];
     }
 
@@ -64,14 +65,19 @@ class ChainCommandService
     }
 
     /**
-     * Return children commands by head
+     * Return children commands by head with priority( less => first )
      *
      * @param $name
      * @return array
      */
     public function getChildren($name): array
     {
-        return $this->commands[$name];
+        $commands = $this->commands[$name];
+        usort($commands,
+            static fn($a, $b): int => $a['priority'] > $b['priority'] ? 1 : -1
+        );
+
+        return $commands;
     }
 
     /**
